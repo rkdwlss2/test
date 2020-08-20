@@ -11,36 +11,38 @@ def GoobneAddress(result):
     driver = webdriver.Chrome('chromedriver.exe')
     driver.get(url)
     time.sleep(4)  
-    table = driver.find_element_by_xpath("//*[@class='type_5']/tbody")
-    # table = driver.find_element_by_class_name('type_5')
-    for tr in table.find_elements_by_tag_name("tr"):
-        td=tr.find_element_by_class_name("name")
-        div=td.find_element_by_class_name("name_area")
+    real=[]
+    for tr2 in [1,2,3]:
+        div = driver.find_element_by_xpath("//*[@id='contentarea']/div[4]/table/tbody/tr[%s]/td[1]/div"%str(tr2))
         a=div.find_element_by_tag_name("a")
         driver.execute_script("arguments[0].click();", a)
-        time.sleep(0.5) 
         url2=driver.current_url[:25]+"/item/sise_day.nhn?"+driver.current_url[-11:]
         driver.get(url2)
         pagenum=1
         trlist=[]
+       
         while True:
             stop=0
             for i in [3,4,5,6,7,11,12,13,14,15]:
                 temp=[]
                 for j in [1,2,3,7]:
                     dat=driver.find_element_by_xpath("//*[@class='type2']/tbody/tr[%s]/td[%s]/span"%(str(i),str(j))).text
-                    print(dat[:5])
-                    if (j==1)&(dat[:5]=="2019"):
+                    if (j==1)&(dat[:4]=="2019"):
                         stop=1
                         break
                     temp.append(dat)
             pagenum+=1
             trlist.append(temp)
             if stop==1:
+                real.append(trlist)
+                driver.get(url)
                 break
-            time.sleep(1) 
             driver.get(url2+"&page="+str(pagenum))
-            time.sleep(1) 
+    print(real) 
+    return       
+           
+           
+           
             # for j in range(7):
             #     trlist.append(driver.find_element_by_xpath("//*[@class='type2']/tbody/tr[%s]/td[%s]/span"%(str(i),str(j+1))))
             # print(trlist)
@@ -80,7 +82,7 @@ def GoobneAddress(result):
     #             if store_phone != '':
     #                 result.append([store_name]+ store_sido_gu+[store_address]+[store_phone])
 
-    return
+
 
 
 GoobneAddress(result)
