@@ -32,6 +32,7 @@ while True:
         pagenum+=1
         if stop==1:
             trlist=pd.DataFrame(trlist,columns=["date","체결가","전일비","거래대금"])
+            trlist=trlist.sort_values(by='date',ascending=True) 
             trlist.to_csv('kospy.csv',encoding='utf-8-sig')
             break
         driver.get(url2+"&page="+str(pagenum))
