@@ -14,7 +14,7 @@ while True:
         stop=0
         for i in [3,4,5,10,11,12]:
             temp=[]
-            for j in [1,2,3,6]:
+            for j in [1,2,3,6,4]:
                 dat1=driver.find_element_by_xpath("//*[@class='type_1']/tbody/tr[%s]/td[%s]"%(str(i),str(j)))
                 dat=dat1.text
                 cla=dat1.get_attribute('class')
@@ -31,7 +31,7 @@ while True:
                 trlist.append(temp)
         pagenum+=1
         if stop==1:
-            trlist=pd.DataFrame(trlist,columns=["date","체결가","전일비","거래대금"])
+            trlist=pd.DataFrame(trlist,columns=["date","체결가","전일비","거래대금","등락률"])
             trlist=trlist.sort_values(by='date',ascending=True) 
             trlist.to_csv('kospy.csv',encoding='utf-8-sig')
             break
