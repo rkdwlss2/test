@@ -1,0 +1,29 @@
+{% extends 'layout.html'%}
+
+{% block contents %}
+<h1 class="text-center">MEMBER LOGIN</h1>
+<hr>
+{% if session['userID'] %}
+<h2 class="text-center"> WELCOME
+    {{ session['userID'] }}
+</h2>
+<p class="text-center">
+    <a href="/log_out" class="btn btn-danger">LOG OUT</a>
+</p>
+{% else %}
+<form action="/login_pro" method="POST">
+    <div class="form-group">
+        <label for="userID">userID:</label>
+        <input type="test" class="form-control" placeholder="Enter userID" ID="userID" name="userID">
+    </div>
+    <div class="form-group">
+        <label for="pwd">Password:</label>
+        <input type="password" class="form-control" placeholder="Enter password" ID="pwd" name="pwd">
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+    <button type="reset" class="btn btn-primary">Reset</button>
+</form>
+<hr>
+{% endif %}
+
+{% endblock %}

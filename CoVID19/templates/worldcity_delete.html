@@ -1,0 +1,35 @@
+{% extends 'layout.html'%}
+
+{% block contents %}
+    <h1 align="center">{{temp_dic.Name}} 삭제 Page</h1>
+    <hr>
+    <h2 align="center">No. {{temp_dic.No}}</h2>
+    <hr>
+    <table cellpadding="10" cellspacing="0" align="center">
+        <tr>
+            <th>Country Number</th>
+            <td>{{ temp_dic.No }}</td>
+        </tr>
+        <tr>
+            <th>Country Code</th>
+            <td>{{ temp_dic.Code }}</td>
+        </tr>
+        <tr>
+            <th>Country GNP</th>
+            <td>$ {{ temp_dic.GNP }}</td>
+        </tr>
+        <tr>
+            <th>Country Population</th>
+            <td>{{ temp_dic.Population }}</td>
+        </tr>
+        <tr>
+            <td colspan="2">
+            정말로 레코드를 삭제하시겠습니까? <br>
+                <a href="/country_delete_pro/{{temp_dic.No}}">네</a>
+                &nbsp;&nbsp; / &nbsp;&nbsp;
+                <a href="/worldcity_list">아니오</a>
+            </td>
+        </tr>
+
+    </table>
+{% endblock %}

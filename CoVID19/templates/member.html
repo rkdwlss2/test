@@ -1,0 +1,28 @@
+{% extends 'layout.html'%}
+
+{% block contents %}
+    <h1 align="center">{{temp_dic.userName}}의 Page</h1>
+    <hr>
+    <h2 align="center">No. {{temp_dic.userNo}}</h2>
+    <hr>
+    <table cellpadding="10" cellspacing = "0" align = "center">
+        <tr>
+            <th>USER NO</th>
+            <td>{{ temp_dic.userNo }}</td>
+        </tr>
+        <tr>
+            <th>USER ID</th>
+            <td>{{ temp_dic.userID }}</td>
+        </tr>
+        <tr>
+            <th>USER NAME</th>
+            <td>{{ temp_dic.userName }}</td>
+        </tr>
+        <tr>
+            <th>USER PASSWORD</th>
+            <td>{{ temp_dic.pwd }}</td>
+        </tr>
+        <hr>
+        <p><a href="/">리스트로 이동하기</a></p>
+    </table>
+{% endblock %}
