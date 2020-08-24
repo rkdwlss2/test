@@ -28,6 +28,25 @@ def get_kosdaq_list() :
     conn.close()
     return temp_list  
 
+def get_jinbiotech_list() :
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    sql = ''' SELECT * FROM covid.jinbiotech order by date  '''
+    cursor.execute(sql)
+    result = cursor.fetchall()
+
+    temp_list = []
+    for row in result:
+        temp_dic = {}
+        temp_dic['date'] = row[0]
+        temp_dic['endprice'] = row[1]
+        temp_dic['diff'] = row[2]
+        temp_dic['tradingvolume'] = row[3]
+        temp_list.append(temp_dic)
+    conn.close()
+    return temp_list  
+
 def worldcity(no):
     conn = get_connection()
     cursor = conn.cursor()
