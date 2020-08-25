@@ -1,0 +1,37 @@
+{% extends 'layout.html'%}
+
+{% block contents %}
+    <h1 align="center"> {{worldcity_name}}이(가) 들어간 나라 List</h1>
+    <hr>
+    <h2 align="center">{{totalcount}} 개</h2>
+    <hr>
+    <hr>
+    <table cellpadding="10" cellspacing = "0" align = "center">
+        <tr>
+            <th>No</th>
+            <th>Code</th>
+            <th>Name</th>
+            <th>GNP</th>
+            <th>Population</th>
+            <th>Detail</th>
+        </tr>
+        {% for temp_dic in worldcity_list %}
+        <tr>
+            <td>{{temp_dic.No}}</td>
+            <td>{{temp_dic.Code}}</td>
+            <td>
+                 {{temp_dic.Name}}
+            </td>
+            <td>${{temp_dic.GNP}}</td>
+            <td>약 {{temp_dic.Population}}명</td>
+            <td><a href = "/worldcity/{{temp_dic.No}}" class="btn">View </a></td>
+        </tr>
+        {% endfor %}
+        <tr>
+            <td><a href="/">첫페이지로 이동하기</a></td>
+        </tr>
+    </table>
+
+    <hr>
+ 
+{% endblock %}

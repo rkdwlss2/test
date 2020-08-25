@@ -1,0 +1,17 @@
+{% extends 'layout.html'%}
+
+{% block contents %}
+<h1>레코드 수정</h1>
+<hr>
+<form action="/member_update_pro" method="post">
+    <input type="hidden" name="c_no" value={{ temp_dic.userNo }}>
+    <label>No : {{ temp_dic.userNo }} </label>
+    <label>ID : <input type="text" name="c_id" value={{ temp_dic.userID }} required></label>
+    <label>NAME : {{ temp_dic.userName }} </label>
+    <label>PASSWORD : <input type="text" name="c_pwd" value={{ temp_dic.pwd }} required></label>
+    <br>
+    <input type="submit" value="수정">
+    <input type="reset" value="취소">
+</form>
+<p><a href="/">취소</a></p>
+{% endblock %}
