@@ -1,62 +1,76 @@
+import matplotlib as plt
+import numpy as np
+import pandas as pd
+import glob
+import  matplotlib as plt
 
 
-from selenium import webdriver
-from itertools import count
-import time
-from bs4 import BeautifulSoup
-result = []
+def pecentages(filename):
+     df = pd.read_csv( filename ,  thousands = ',')
+     df.drop([159] , inplace = True)
+     df.loc[:,'종가':] = df.loc[:,'종가':].astype('int')
+     result =[]
+     for i in range(len(df)-2):
+          result.append((df['종가'][i+1] - df['종가'][i])/df['종가'][i] *100)
+     result.insert(0,0)
+     result.insert(158,0)
+     result =np.array(result).round(2)
 
-def GoobneAddress(result):
-    url = 'https://finance.naver.com/sise/sise_group_detail.nhn?type=theme&no=108'
-    driver = webdriver.Chrome('chromedriver.exe')
-    driver.get(url)
-    time.sleep(4)  
-    table = driver.find_element_by_xpath("//*[@class='type_5']/tbody")
-    # table = driver.find_element_by_class_name('type_5')
-    for tr in table.find_elements_by_tag_name("tr"):
-        td=tr.find_element_by_class_name("name")
-        div=td.find_element_by_class_name("name_area")
-        a=div.find_element_by_tag_name("a")
-        driver.execute_script("arguments[0].click();", a)
-        time.sleep(0.5) 
-        a2 = driver.find_element_by_xpath("//*[@class='tab2']")
-        driver.execute_script("arguments[0].click();", a2)
-        time.sleep(0.5)
-        a2 = driver.find_element_by_xpath("//*[@class='Nnavi']")
-        # test2
+     s1 = pd.Series(result)
+     df2 = pd.concat([df , s1] , axis = 1)
 
 
-    #     div=td.find_element_by_class_name("name_area")
-    #     a=div.find_elements_by_tag_name("a")
-    #     driver.execute_script("arguments[0].click();", a)
+     df2.columns  = ['index' , 'date' , '종가' , '전일비' , '거래량' , '상승률']
+
+     df2.to_csv('C:/project/modify/수정_' +filename,encoding='utf-8-sig')
+
+def Beta(filename , beta):
+     df1 = pd.read_csv(filename)
+     df2= pd.read_csv('C:/project/data/kospi.csv')
+     df3 = pd.read_csv('C:/project/data/kosdaq2.csv')
+     kospi = df2['등락률2']
+     kospi = np.array(kospi)
+     kospi = kospi[:158]
+     kosdaq = df3['등락률2']
+     kosdaq = np.array(kosdaq)
+     kosdaq = kosdaq[:158]
+     stock = df1['상승률']
+     stock = np.array(stock)
+     stock = stock[:158]
+     if 'kospi' in filename:
+          cov = np.cov(kospi, stock)
+          Beta = cov[0][1] / cov[0][0]
+          filename = filename.replace('C:/project/modify\\수정_' , '')
+          filename = filename.replace('kospi', '')
+          filename = filename.replace('.csv', '')
+          beta[filename]  = Beta.round(2)
+     else:
+          cov = np.cov(kosdaq, stock)
+          Beta = cov[0][1] / cov[0][0]
+          filename = filename.replace('C:/project/modify\\수정_', '')
+          filename = filename.replace('kosdaq', '')
+          filename = filename.replace('.csv', '')
+          beta[filename] = Beta.round(2)
+
+def main():
+     beta = {}
+     df1 = pd.read_csv('C:/project/data/kospy.csv')
+     df1['등락률'] = df1.등락률.apply(lambda x: x.replace('%', ''))
+     df1['등락률2'] = pd.to_numeric(df1['등락률'])
+     df1.to_csv('C:/project/data/kospi.csv',encoding='utf-8-sig')
+     df2 = pd.read_csv('C:/project/data/kosdaq.csv')
+     df2['등락률'] = df2.등락률.apply(lambda x: x.replace('%', ''))
+     df2['등락률2'] = pd.to_numeric(df2['등락률'])
+     df2.to_csv('C:/project/data/kosdaq2.csv', encoding='utf-8-sig')
+     for files in glob.glob("*.csv"):
+          pecentages(files)
+     for files in glob.glob('C:/project/modify/*.csv'):
+          Beta(files,beta)
+     print(beta)
 
 
-    # for page in count():
-    #     driver.execute_script('store.getList(%s)'%str(page+1))        
-    #     time.sleep(2)
-    #     rcv_data = driver.page_source
-    #     soupData = BeautifulSoup(rcv_data, 'html.parser')
-    #     print("굽네 치킨 [%s] 크롤링 " % str(page+1))
-    #     for storelist in soupData.findAll('tbody', {'id':"store_list"}):
-    #         for store in storelist:
-    #             tr_tag = list(store.strings)
-    #             if tr_tag[0] == '등록된 데이터가 없습니다.':
-    #                 print("크롤링 종료")
-    #                 return result                 
-    #             store_name = tr_tag[1]
-    #             store_address = tr_tag[6]
-    #             store_sido_gu = store_address.split()[:2]
-    #             store_phone = tr_tag[3]
-    #             if store_phone != '':
-    #                 result.append([store_name]+ store_sido_gu+[store_address]+[store_phone])
 
-    return
+main()
 
 
-GoobneAddress(result)
 
-# import pandas as pd 
-# goobne_table = pd.DataFrame(result, columns=['store','sido', 'gungu', 'address','phone'])
-# goobne_table.to_csv("goobne.csv", encoding="cp949", index=True)
-
-# print("굽네 치킨 주소 저장 완료")
