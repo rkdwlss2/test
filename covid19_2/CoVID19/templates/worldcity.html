@@ -1,0 +1,28 @@
+{% extends 'layout.html'%}
+
+{% block contents %}
+    <h1 align="center">{{temp_dic.Name}} Page</h1>
+    <hr>
+    <h2 align="center">No. {{temp_dic.No}}</h2>
+    <hr>
+    <table cellpadding="10" cellspacing = "0" align = "center">
+        <tr>
+            <th>Country Number</th>
+            <td>{{ temp_dic.No }}</td>
+        </tr>
+        <tr>
+            <th>Country Code</th>
+            <td>{{ temp_dic.Code }}</td>
+        </tr>
+        <tr>
+            <th>Country GNP</th>
+            <td>$ {{ temp_dic.GNP }}</td>
+        </tr>
+        <tr>
+            <th>Country Population</th>
+            <td>{{ temp_dic.Population }}</td>
+        </tr>
+        <hr>
+        <p><a href="/worldcity_list">리스트로 이동하기</a></p>
+    </table>
+{% endblock %}

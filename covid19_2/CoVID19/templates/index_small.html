@@ -1,0 +1,41 @@
+{% extends 'layout.html'%}
+
+{% block contents %}
+{% if session['userID'] %}
+<h1 class="text-center">WELCOME</h1>
+<table class="table table-hover">
+    <tr class="table-info">
+        <th class="text-center">NO</th>
+        <th class="text-center">ID</th>
+        <th class="text-center">NAME</th>
+        <th class="text-center">PASSWORD</th>
+        <th class="text-center">Detail</th>
+        <th class="text-center">Delete</th>
+        <th class="text-center">Update</th>
+    </tr>
+    {% for temp_dic in member_list %}
+    <tr>
+        <td class="text-center">{{temp_dic.userNo}}</td>
+        <td class="text-center">{{temp_dic.userID}}</td>
+        <td class="text-center">{{temp_dic.userName}}</td>
+        <td class="text-center">{{temp_dic.pwd}}</td>
+        <td><a href = "/member/{{temp_dic.userNo}}" class="btn btn-primary"> View </a></td>
+        <td><a href = "/member_delete/{{temp_dic.userNo}}" class="btn btn-success"> Delete </a></td>
+        <td><a href = "/member_update/{{temp_dic.userNo}}" class="btn btn-danger"> Edit </a></td>
+
+    </tr>
+    {% endfor %}
+</table>
+{% else %}
+<h1 class="text-center">WELCOME</h1>
+<h2 class="text-center">Sign up to see the stock analysis!!</h2>
+<hr>
+<h2 class="text-center">
+    <a href="/login" class="btn btn-dark">LOG IN</a>
+    <hr>
+    <a href="/signup" class="btn btn-dark">SIGN UP</a>
+</h2>
+<hr>
+{% endif %}
+
+{% endblock %}

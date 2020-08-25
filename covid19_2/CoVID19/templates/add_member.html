@@ -1,0 +1,27 @@
+<!-- 상속 받기 -->
+{% extends 'layout.html' %}
+
+{% block contents %}
+        <h1 class="text-center">Add Member Page</h1>
+        <form action="/add_pro" method="POST">
+            <div class="form-group">
+              <label for="userID">userID</label>
+              <input type="text" class="form-control" 
+                placeholder="Enter userID" ID="userID" name="userID">
+            </div>
+            <div class="form-group">
+                <label for="userName">userName</label>
+                <input type="text" class="form-control" 
+                  placeholder="Enter userName" ID="userName" name="userName">
+              </div>
+            <div class="form-group">
+              <label for="pwd">Password:</label>
+              <input type="password" class="form-control" 
+                placeholder="Enter password" ID="pwd" name="pwd">
+            </div>
+            
+            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="reset" class="btn btn-primary">Reset</button>
+        </form>
+        
+{% endblock %}

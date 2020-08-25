@@ -1,0 +1,16 @@
+{% extends 'layout.html'%}
+
+{% block contents %}
+    <h1>레코드 추가</h1>
+    <hr>
+    <form action="/country_add_pro" method="post">
+        <label>CODE <input type="text" name="c_code" required></label>
+        <label>NAME <input type="text" name="c_name" required></label>
+        <label>GNP <input type="text" name="c_gnp"  required></label>
+        <label>POPULATION <input type="text" name="c_population" required></label>
+        <br>
+        <input type="submit" value="전송"> 
+        <input type="reset" value="취소">
+      </form>
+      <p><a href="/worldcity_list">취소</a></p>
+{% endblock %}
