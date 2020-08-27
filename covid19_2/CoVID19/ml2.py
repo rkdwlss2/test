@@ -11,6 +11,10 @@ import datetime as dt
 import os
 from sklearn.linear_model import Ridge
 def img1(date1,text,beta1,kos):
+    if kos=="kospy":
+        ko=0
+    else:
+        ko=1
     if beta1=="베타에 값없다":
         print("베타에 값없음")
         return
@@ -63,9 +67,9 @@ def img1(date1,text,beta1,kos):
 
     data2=pd.read_csv('data/'+text+'.csv',engine='python',parse_dates=["date"],thousands=',')
     
-    if kos==1:
+    if ko==0:
         kospy=pd.read_csv('data/kospy.csv',engine='python')
-    elif kos==2:
+    else:
         kospy=pd.read_csv('data/kosdaq.csv',engine='python')
     kospyDf=pd.DataFrame(kospy)
     kospynum=kospyDf.iloc[:,5][:158]
@@ -115,3 +119,6 @@ def img1(date1,text,beta1,kos):
     print(inputdate,"일 뒤에 %.2f 퍼센트증가"%round(percent[0]-100,2))
     return round(percent[0]-100,2)
 
+if __name__ == "__main__":
+    img1(500,"진바이오텍",+0.5,"kospy")
+    

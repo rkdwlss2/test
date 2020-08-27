@@ -46,6 +46,7 @@
   z-index: 1;
   top: 50px;
   right: 0px;
+  background: rgb(255, 255, 255);
   overflow-x: hidden;
   padding: 0 0;
 }
@@ -111,6 +112,10 @@ footer {
     </div>
   </nav>
   <div class="sidenav">
+    <!-- {% for i in zulist %}
+        <a href = "/">{{i}}</a>
+    {% endfor %} -->
+    <a href = "/jinbiotech">진바이오텍</a>
     <a href = "/">JW중외제약</a>
     <a href = "/">SV인베스트먼트</a>
     <a href = "/">강스템바이오텍</a>
@@ -158,7 +163,6 @@ footer {
     <a href = "/">젠큐릭스</a>
     <a href = "/">지노믹트리</a>
     <a href = "/">진매트릭스</a>
-    <a href = "/jinbiotech">진바이오텍</a>
     <a href = "/">진원생명과학</a>
     <a href = "/">천랩</a>
     <a href = "/">카이노스메드</a>
@@ -203,12 +207,12 @@ footer {
       <div class="main">
         <form action="/action_page" method="post" style="text-align: right;">
           <label for="몇일 analysis를 보고싶으십니까?">몇일의 analysis를 보고싶으십니까?   </label>
-          <input type="date" id="date" name="date">
-          <input type="text" id="text" name="text">
+          <input type="date" id="date" name="date" required>
+          <input type="text" id="text" name="text" placeholder="Enter user 종목" required>
           <input type="submit">
         </form>
       <hr>
-        
+      
         {% block contents %} {% endblock%}
       </div>
       <!-- /.container -->

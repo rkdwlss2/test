@@ -9,11 +9,11 @@ from sklearn.metrics import r2_score
 from sklearn.preprocessing import PolynomialFeatures
 import datetime as dt
 import os
-from sklearn.linear_model import Ridge
-def img1(date1,text,beta1,kos):
+
+def img1(date1,text,beta1):
+    ko=0
     if beta1=="베타에 값없다":
-        print("베타에 값없음")
-        return
+        ko=1
     # os.remove('static/images/jin.png')
     X=np.array([258.0,270.0,294.0,320.0,342.0,369.0,396.0,446.0,480.0,586.0])[:,np.newaxis]
     y=np.array([236.4,234.4,252.8,298.6,314.2,342.2,360.8,368.0,391.2,390.8])
@@ -62,30 +62,18 @@ def img1(date1,text,beta1,kos):
     r2_quad=r2_score(y,y_quad_pred)
 
     data2=pd.read_csv('data/'+text+'.csv',engine='python',parse_dates=["date"],thousands=',')
-    
-    if kos==1:
-        kospy=pd.read_csv('data/kospy.csv',engine='python')
-    elif kos==2:
-        kospy=pd.read_csv('data/kosdaq.csv',engine='python')
-    kospyDf=pd.DataFrame(kospy)
-    kospynum=kospyDf.iloc[:,5][:158]
-    kospynum=kospynum.map(lambda x: float(x[:-1])*beta1)
+    kospy=pd.read_csv('data/kospy.csv',engine='python')
+    kosdaq=pd.read_csv('data/kosdaq.csv',engine='python')
     df2=pd.DataFrame(data2)
     result=df2.iloc[:,2][:-1]
     result[:-1],data['date'][:158],data['new_cases'][:158]
-    a=pd.concat([y,result[:-1],data['new_cases'][:158],kospynum],axis=1)
-    x_train=a[['date','new_cases','�벑�씫瑜�']]
-    print(x_train)
+    a=pd.concat([y,result[:-1],data['new_cases'][:158]],axis=1)
+    x_train=a[['date','new_cases']]
     y_train=a.iloc[:,1]
     from sklearn.linear_model import ElasticNet
     mlr=ElasticNet(alpha=0.5,l1_ratio=0.5)
     mlr.fit(x_train, y_train) 
     y_quad_pred =mlr.predict(x_train)
-
-    ridge=Ridge().fit(pd.DataFrame(y),pd.DataFrame(kospynum))
-    y_fit1=ridge.predict(np.arange(0,500,1)[:,np.newaxis])
-
-
     # inputdate=300
     # X_fit=np.arange(inputdate,inputdate+1,1)[:,np.newaxis]
     # y_quad_fit =pr.predict(quadratic.fit_transform(X_fit))
@@ -102,16 +90,10 @@ def img1(date1,text,beta1,kos):
     X_fit=np.arange(inputdate,inputdate+1,1)[:,np.newaxis]
     test=np.arange(250,250+250,1)[:,np.newaxis]
     y_quad_fit =pr.predict(quadratic.fit_transform(X_fit))
-    y_quad_fit1=ridge.predict(X_fit)
-    
-
-    
-
-    my_predict = mlr.predict([[inputdate,y_quad_fit,y_quad_fit1]])
+    my_predict = mlr.predict([[inputdate,y_quad_fit]])
     percent=(my_predict/y_train.iloc[-1])*100
     plt.plot(inputdate,my_predict,color='red', marker='o')
     plt.savefig('static/images/jin.png')
     plt.cla()
     print(inputdate,"일 뒤에 %.2f 퍼센트증가"%round(percent[0]-100,2))
     return round(percent[0]-100,2)
-

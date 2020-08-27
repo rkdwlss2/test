@@ -4,7 +4,7 @@ import pymysql
 # 데이터 베이스에 접속하는 함수
 def get_connection() :
     conn = pymysql.connect(host='127.0.0.10', user='root',
-            password='1234', db='covid', charset='utf8')
+            password='1234', db='covid12', charset='utf8')
     if conn:
         print('디비 접속 완료')
     return conn
@@ -13,7 +13,7 @@ def get_kosdaq_list() :
     conn = get_connection()
     cursor = conn.cursor()
 
-    sql = ''' SELECT * FROM covid.kosdaq order by date  '''
+    sql = ''' SELECT * FROM covid12.kosdaq order by date  '''
     cursor.execute(sql)
     result = cursor.fetchall()
 
@@ -32,7 +32,7 @@ def get_jinbiotech_list() :
     conn = get_connection()
     cursor = conn.cursor()
 
-    sql = ''' SELECT * FROM covid.jinbiotech order by date  '''
+    sql = ''' SELECT * FROM covid12.jinbiotech order by date  '''
     cursor.execute(sql)
     result = cursor.fetchall()
 
@@ -183,7 +183,7 @@ def login_result(userID, pwd):
     conn = get_connection()
     cursor = conn.cursor()
 
-    sql = '''SELECT * FROM member WHERE userID=%s AND pwd=%s'''
+    sql = '''SELECT * FROM covid12.member WHERE userID=%s AND pwd=%s'''
     cursor.execute(sql,(userID,pwd))
     login_result = cursor.fetchone()
 
