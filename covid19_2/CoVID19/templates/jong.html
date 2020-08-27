@@ -1,15 +1,16 @@
 {% extends 'layout.html'%}
 
 {% block contents %}
+    <h1>{{kospy}}종목 : {{name}}</h1>
     <script> 
         var tmpDate = new Date(); 
         $("#itemImg").attr("src", "static/images/jin.png?"+tmeDate.getTime()); 
     </script>
 
-    <img id="itemImg" src="static/images/jin.png?nocache=<?php echo time(); ?>"/>
-    <p>{{kospy}}종목 : {{name}}</p>
-    <p>{{days}}일후현재보다{{per}}퍼센트 오를 예정</p>
-    <p>beta계수 : {{beta1}}</p>
+    <img id="itemImg" src="static/images/jin.png?nocache=<?php echo time(); ?>" style="align-content: center;"/>
+
+    <h2>{{days}}일 후 현재보다{{per}}퍼센트 오를 예정</h2>
+    <p style="text-decoration-line: underline;">beta계수 : {{beta1}}</p>
     
 
 {% endblock %}

@@ -14,33 +14,13 @@ def img1(date1,text,beta1,kos):
     if beta1=="베타에 값없다":
         print("베타에 값없음")
         return
-    # os.remove('static/images/jin.png')
-    X=np.array([258.0,270.0,294.0,320.0,342.0,369.0,396.0,446.0,480.0,586.0])[:,np.newaxis]
-    y=np.array([236.4,234.4,252.8,298.6,314.2,342.2,360.8,368.0,391.2,390.8])
+    os.remove('static/images/jin.png')
 
     lr=LinearRegression()
     pr=LinearRegression()
 
-    quadratic=PolynomialFeatures(degree=2)
-    X_quad=quadratic.fit_transform(X)
-
-    lr.fit(X,y)
     X_fit=np.arange(250,800,10)[:,np.newaxis]
-    y_lin_fit=lr.predict(X_fit)
-
-    pr.fit(X_quad,y)
-    y_quad_fit =pr.predict(quadratic.fit_transform(X_fit))
-
-    y_lin_pred=lr.predict(X)
-    y_quad_pred =pr.predict(X_quad)
-
-    mse_lin=mean_squared_error(y,y_lin_pred)
-    mse_quad=mean_squared_error(y,y_quad_pred)
-
-    r2_lin=r2_score(y,y_lin_pred)
-    r2_quad=r2_score(y,y_quad_pred)
-
-
+ 
     import datetime as dt
     data=pd.read_excel('data/covid2.xlsx')
     df=pd.DataFrame(data)
@@ -51,9 +31,7 @@ def img1(date1,text,beta1,kos):
     y=y/1000000000
     quadratic=PolynomialFeatures(degree=6)
     X_quad=quadratic.fit_transform(X)
-
     X_fit=np.arange(0,500,1)[:,np.newaxis]
-
     pr.fit(X_quad,y)
     y_quad_fit =pr.predict(quadratic.fit_transform(X_fit))
     y_quad_pred =pr.predict(X_quad)
@@ -75,13 +53,12 @@ def img1(date1,text,beta1,kos):
     result[:-1],data['date'][:158],data['new_cases'][:158]
     a=pd.concat([y,result[:-1],data['new_cases'][:158],kospynum],axis=1)
     x_train=a[['date','new_cases','�벑�씫瑜�']]
-    print(x_train)
     y_train=a.iloc[:,1]
     from sklearn.linear_model import ElasticNet
     mlr=ElasticNet(alpha=0.5,l1_ratio=0.5)
     mlr.fit(x_train, y_train) 
-    y_quad_pred =mlr.predict(x_train)
-
+    y_quad_pred=mlr.predict(x_train)
+    print(x_train)
     ridge=Ridge().fit(pd.DataFrame(y),pd.DataFrame(kospynum))
     y_fit1=ridge.predict(np.arange(0,500,1)[:,np.newaxis])
 

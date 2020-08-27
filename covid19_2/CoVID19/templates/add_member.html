@@ -2,26 +2,27 @@
 {% extends 'layout.html' %}
 
 {% block contents %}
-        <h1 class="text-center">Add Member Page</h1>
+        <h1 class="text-center" style="margin: 50pt;">회원가입</h1>
         <form action="/add_pro" method="POST">
             <div class="form-group">
-              <label for="userID">userID</label>
-              <input type="text" class="form-control" 
+              <label for="userID">회원 이름 : </label>
+              <input style="width:50%;" type="text" class="form-control" 
                 placeholder="Enter userID" ID="userID" name="userID">
             </div>
             <div class="form-group">
-                <label for="userName">userName</label>
-                <input type="text" class="form-control" 
+                <label for="userName">회원 ID : </label>
+                <input style="width:50%;" type="text" class="form-control" 
                   placeholder="Enter userName" ID="userName" name="userName">
               </div>
             <div class="form-group">
-              <label for="pwd">Password:</label>
-              <input type="password" class="form-control" 
+              <label for="pwd">비밀번호 : </label>
+              <input style="width:50%;" type="password" class="form-control" 
                 placeholder="Enter password" ID="pwd" name="pwd">
             </div>
             
-            <button type="submit" class="btn btn-primary">Submit</button>
-            <button type="reset" class="btn btn-primary">Reset</button>
+            <button style="width:40%;" type="submit" class="btn btn-primary">회원가입</button>
+            <button style="width:40%;" type="reset" class="btn btn-primary">취소</button>
         </form>
+        <hr>
         
 {% endblock %}

@@ -11,7 +11,49 @@
     <a href="/log_out" class="btn btn-danger">LOG OUT</a>
 </p>
 {% else %}
-<form action="/login_pro" method="POST">
+
+<button onclick="document.getElementById('id01').style.display='block'" style="width:auto;">Login</button>
+
+<div id="id01" class="modal">
+  
+  <form class="modal-content animate" action="/login_pro" method="post">
+    <!-- <div class="imgcontainer">
+      <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
+    </div> -->
+
+    <div class="container">
+        <label for="userID">userID:</label>
+        <input type="test" class="form-control" placeholder="Enter userID" ID="userID" name="userID">
+
+        <label for="pwd">Password:</label>
+        <input type="password" class="form-control" placeholder="Enter password" ID="pwd" name="pwd">
+        
+      <button type="submit">Login</button>
+      <label>
+        <input type="checkbox" checked="checked" name="remember"> Remember me
+      </label>
+    </div>
+
+    <div class="container" style="background-color:#f1f1f1">
+      <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
+      <span class="psw">Forgot <a href="#">password?</a></span>
+    </div>
+  </form>
+</div>
+
+<script>
+// Get the modal
+var modal = document.getElementById('id01');
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
+</script>
+
+<!-- <form action="/login_pro" method="POST">
     <div class="form-group">
         <label for="userID">userID:</label>
         <input type="test" class="form-control" placeholder="Enter userID" ID="userID" name="userID">
@@ -22,7 +64,7 @@
     </div>
     <button type="submit" class="btn btn-primary">Submit</button>
     <button type="reset" class="btn btn-primary">Reset</button>
-</form>
+</form> -->
 <hr>
 {% endif %}
 
